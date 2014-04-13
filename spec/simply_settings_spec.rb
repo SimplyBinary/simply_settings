@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SimplySettings do
 
-  subject(:settings) { SimplySettings::Settings.instance }
+  subject(:settings) { SimplySettings }
 
   context 'Getting and Setting values' do
   
@@ -41,50 +41,61 @@ describe SimplySettings do
 
   context "Fetching settings like a Hash" do
 
-    pending "returns value if defined" do
-
+    it "returns value if defined" do
+      settings.hello = "world"
+      expect(settings.fetch(:hello)).to eql("world")
     end
 
-    pending "defines and returns default value if undefined" do
-
+    it "assigns the default value if the setting is not found" do
+      settings.fetch(:hello) { "world" }
+      expect(settings.hello).to eql("world")
     end
   end
 
   context "Bracket access to settings like a Hash" do
 
-    pending "sets a value with []=" do
-
+    it "sets a value with []=" do
+      settings[:hello] = "world"
+      expect(settings.hello).to eql("world")
     end
 
-    pending "gets a value with [:setting_name]" do
-
+    it "gets a value with [:setting_name]" do
+      settings.hello = "world"
+      expect(settings[:hello]).to eql("world")
     end
 
   end
 
   context "Listing settings" do
 
-    pending "lists defined settings in ascending alpha order" do
-
+    it "lists defined settings in ascending alpha order" do
+      settings.b = "1"
+      settings.c = "2"
+      settings.a = "3"
+      expect(settings.settings).to eql(["a", "b", "c"])
     end
 
   end
 
   context "Setting / Retrieving objects" do
-    pending "assigns boolean and gets boolean" do
-
+    it "assigns boolean and gets boolean" do
+      settings.is_true = true
+      expect(settings.is_true).to eql(true)
     end
 
-    pending "assigns array and gets array" do
-
+    it "assigns array and gets array" do
+      settings.is_array = [1,2,3]
+      expect(settings.is_array).to eql([1,2,3])
     end
 
-    pending "assigns hash and gets hash" do
-
+    it "assigns hash and gets HashWithIndifferentAccess" do
+      settings.is_hash = { hello: "world"}
+      expect(settings.is_hash[:hello]).to eql("world") 
     end
 
-    pending "creates getters with question marks for boolean values" do
-
+    it "creates getters with question marks for boolean values" do
+      settings.is_true = true
+      expect(settings.is_true?).to eql(true)
     end
   end
 
