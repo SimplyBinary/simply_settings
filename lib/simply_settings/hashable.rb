@@ -4,16 +4,16 @@ module SimplySettings
     value = get(setting)
     return value unless value.nil?
     value = yield if block_given?
-    set(setting, value)
+    define_and_call_setter(setting, value)
     value
   end
 
   def []=(setting, value)
-    set(setting, value)
+    define_and_call_setter(setting, value)
   end
 
   def [](setting)
-    get(setting)
+    define_and_call_getter(setting)
   end
   
 end

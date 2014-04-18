@@ -39,33 +39,6 @@ describe SimplySettings do
 
   end
 
-  context "Fetching settings like a Hash" do
-
-    it "returns value if defined" do
-      settings.hello = "world"
-      expect(settings.fetch(:hello)).to eql("world")
-    end
-
-    it "assigns the default value if the setting is not found" do
-      settings.fetch(:hello) { "world" }
-      expect(settings.hello).to eql("world")
-    end
-  end
-
-  context "Bracket access to settings like a Hash" do
-
-    it "sets a value with []=" do
-      settings[:hello] = "world"
-      expect(settings.hello).to eql("world")
-    end
-
-    it "gets a value with [:setting_name]" do
-      settings.hello = "world"
-      expect(settings[:hello]).to eql("world")
-    end
-
-  end
-
   context "Listing settings" do
 
     it "lists defined settings in ascending alpha order" do
@@ -73,6 +46,28 @@ describe SimplySettings do
       settings.c = "2"
       settings.a = "3"
       expect(settings.settings).to eql(["a", "b", "c"])
+    end
+
+  end
+
+  context "Defining setting methods" do
+
+    it "defines getters and setters when set." do
+      settings.hello = "world"
+      expect(settings.respond_to?(:hello)).to eql(true)
+      expect(settings.respond_to?(:hello=)).to eql(true)
+    end
+
+    it "removes getters and setters when deleted" do
+      settings.hello = "world"
+      settings.delete(:hello)
+      expect(settings.respond_to?(:hello)).to be_false
+    end
+
+    it "removes getters and setters when assigned to nil" do
+      settings.hello = "world"
+      settings.hello = nil
+      expect(settings.respond_to?(:hello)).to be_false
     end
 
   end
@@ -98,5 +93,4 @@ describe SimplySettings do
       expect(settings.is_true?).to eql(true)
     end
   end
-
 end

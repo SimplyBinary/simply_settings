@@ -40,5 +40,19 @@ module SimplySettings
     self.table_name = "simply_settings"
 
     serialize :value, JSONWithIndifferentAccessForHashes
+
+    after_save :update_cache
+    after_destroy :invalidate_cache
+
+    private
+
+    def invalidate_cache
+      SimplySettings.cache.delete("#{SimplySettings.key_prefix}_#{setting}")
+    end
+
+    def update_cache
+      SimplySettings.cache.write("#{SimplySettings.key_prefix}_#{setting}", self)
+    end
+
   end
 end

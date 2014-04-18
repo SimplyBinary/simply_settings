@@ -1,17 +1,15 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-# Maintain your gem's version:
 require "simply_settings/version"
 
-# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "simply_settings"
   s.version     = SimplySettings::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of SimplySettings."
-  s.description = "TODO: Description of SimplySettings."
+  s.authors     = ["Pete Broderick"]
+  s.email       = ["pete@simplybinary.com"]
+  s.homepage    = "http://github.com/simplyb/simply_settings"
+  s.summary     = "Database backed, cached, dynamic application settings."
+  s.description = "Database backed, cached, dynamic application settings."
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
 
